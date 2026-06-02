@@ -1,0 +1,18 @@
+{
+	"name": "paytef",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "concurrently \"npm run dev:server\" \"npm run dev:ui\"",
+		"dev:server": "npm --prefix server run dev",
+		"dev:ui": "npm --prefix ui run dev"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"concurrently": "^10.0.3"
+	}
+}
