@@ -2,7 +2,7 @@ const jwt       = require('jsonwebtoken');
 const database  = require('../../db/database');
 const env       = require('../../config/env');
 
-function login({ name, password }) {
+function login({ name, password, remember = false }) {
     const user = database.findUserByName(name);
 
     if (!user || user.password !== password) {
@@ -16,7 +16,7 @@ function login({ name, password }) {
         },
         env.jwtSecret,
         {
-            expiresIn: '8h'
+            expiresIn: remember ? '30d' : '8h'
         }
     );
 

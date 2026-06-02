@@ -5,7 +5,13 @@ const authService = require('./auth.service');
 const router = express.Router();
 
 router.post('/login', (req, res) => {
-    const { name, password } = req.body;
+    if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
+        return res.status(400).json({
+            message: 'Request body must be an object.',
+        });
+    }
+
+    const { name, password, remember } = req.body;
 
     if (!name || !password) {
         return res.status(400).json({
@@ -13,7 +19,7 @@ router.post('/login', (req, res) => {
         });
     }
 
-    const result = authService.login({ name, password });
+    const result = authService.login({ name, password, remember: Boolean(remember) });
 
     if (!result) {
         return res.status(401).json({

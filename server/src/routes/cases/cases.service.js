@@ -26,6 +26,15 @@ function createCase(user, caseData) {
         };
     }
 
+    if (!caseData || typeof caseData !== 'object' || Array.isArray(caseData)) {
+        return {
+            error: {
+                status: 400,
+                message: 'Request body must be an object.'
+            }
+        };
+    }
+
     const { caseType, presentedAt, subject, status, assistantId } = caseData;
 
     if (!caseType || !presentedAt || !subject || !status) {
@@ -56,7 +65,7 @@ function createCase(user, caseData) {
         subject,
         status,
         lawyerId: user.id,
-        assistantId: assistantId ? Number(assistantId) : null
+        assistantId: assistantId === undefined || assistantId === null ? null : Number(assistantId)
     });
 
     return {
@@ -85,6 +94,15 @@ function updateCase(user, caseId, updateData) {
         };
     }
 
+    if (!updateData || typeof updateData !== 'object' || Array.isArray(updateData)) {
+        return {
+            error: {
+                status: 400,
+                message: 'Request body must be an object.'
+            }
+        };
+    }
+
     const allowedFields = ['status', 'assistantId'];
     const invalidFields = Object.keys(updateData).filter((field) => !allowedFields.includes(field));
 
@@ -93,6 +111,15 @@ function updateCase(user, caseId, updateData) {
             error: {
                 status: 400,
                 message: 'Only status and assistantId can be updated.'
+            }
+        };
+    }
+
+    if (!allowedFields.some((field) => Object.prototype.hasOwnProperty.call(updateData, field))) {
+        return {
+            error: {
+                status: 400,
+                message: 'At least status or assistantId must be provided.'
             }
         };
     }

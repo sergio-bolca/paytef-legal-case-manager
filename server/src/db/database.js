@@ -3,8 +3,12 @@ const cases = require('../data/cases');
 
 class Database {
     constructor() {
-        this.users = [...users];
-        this.cases = [...cases];
+        this.reset();
+    }
+
+    reset() {
+        this.users = users.map((user) => ({ ...user }));
+        this.cases = cases.map((caseItem) => ({ ...caseItem }));
     }
 
     findUserByName(name) {
