@@ -13,8 +13,6 @@ Instalar dependencias desde la raiz y desde cada aplicacion si todavia no estan 
 
 ```bash
 npm install
-npm --prefix server install
-npm --prefix ui install
 ```
 
 Levantar frontend y backend juntos:
